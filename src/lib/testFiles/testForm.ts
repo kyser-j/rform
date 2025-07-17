@@ -89,11 +89,9 @@ const page: Page = {
   discriminator: 'page',
 };
 
-const testForm: Form = {
+export const testForm: Form = {
   id: '12345',
   name: 'My Form',
   pages: [page],
   discriminator: 'form',
 };
-
-export default testForm;
