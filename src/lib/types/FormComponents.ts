@@ -1,4 +1,4 @@
-type Discriminator = 'form' | 'page' | 'section' | 'component';
+type Discriminator = 'form' | 'page' | 'pageedge' | 'section' | 'component';
 
 export interface FormEntity {
   id: string;
@@ -10,13 +10,19 @@ export interface FormEntityWithSubEntities extends FormEntity {
   entities: Entities;
 }
 
-export interface Form extends FormEntity {
+export interface RForm extends FormEntity {
   discriminator: 'form';
   pages: Page[];
 }
 
+export interface PageEdge extends FormEntity {
+  discriminator: 'pageedge';
+  destinationPageId: string;
+}
+
 export interface Page extends FormEntityWithSubEntities {
   discriminator: 'page';
+  edges: PageEdge[];
 }
 
 export interface Section extends Omit<FormEntityWithSubEntities, 'name'> {

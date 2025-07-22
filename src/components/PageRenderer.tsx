@@ -1,3 +1,4 @@
+import { useRFormProvider } from '@/lib/hooks/useRFormProvider';
 import type { Page } from '@/lib/types/FormComponents';
 import ComponentRenderer from './ComponentRenderer';
 import SectionRenderer from './SectionRenderer';
@@ -7,8 +8,12 @@ interface Props {
 }
 
 const PageRenderer = ({ page }: Props) => {
+  const { pageGraph } = useRFormProvider();
+
+  const isCurrentPage = pageGraph.getCurrentPageNodeId() === page.id;
+
   return (
-    <div>
+    <div className={`${isCurrentPage ? '' : 'hidden'}`}>
       <h1 className='text-2xl font-semibold'>{page.name}</h1>
       {page.entities?.map((entity) => {
         if (entity.discriminator === 'section') {

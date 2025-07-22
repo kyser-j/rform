@@ -1,5 +1,5 @@
 import type { Button, Checkbox, Dropdown, Input, RadioButton, Text, TextArea } from '../types/BuiltInComponents';
-import type { Form, Page, Section } from '../types/FormComponents';
+import type { Page, RForm, Section } from '../types/FormComponents';
 
 const nameInput: Input = {
   id: 'name',
@@ -82,16 +82,47 @@ const section: Section = {
   discriminator: 'section',
 };
 
-const page: Page = {
-  id: 'contact-us-page',
-  name: 'Contact Us',
+const page1: Page = {
+  id: '54742fe6-d15b-410b-859e-e2718913886f',
+  name: 'Contact Us 1',
   entities: [section],
   discriminator: 'page',
+  edges: [
+    {
+      id: '29b507e4-f9a4-40f8-8289-e3b3d4e8ce5a',
+      discriminator: 'pageedge',
+      destinationPageId: '33629f60-6535-4f10-83c6-3c96faa0593f', // page 2
+      name: 'page-edge-1',
+    },
+  ],
 };
 
-export const testForm: Form = {
+const page2: Page = {
+  id: '33629f60-6535-4f10-83c6-3c96faa0593f',
+  name: 'Contact Us 2',
+  entities: [section],
+  discriminator: 'page',
+  edges: [
+    {
+      id: '4db4dbb8-cd31-4239-8f74-f816e6837bda',
+      discriminator: 'pageedge',
+      destinationPageId: 'f8cc1b3c-b4f6-4c4b-be14-9c2c870ead66', // page 3
+      name: 'page-edge-2',
+    },
+  ],
+};
+
+const page3: Page = {
+  id: 'f8cc1b3c-b4f6-4c4b-be14-9c2c870ead66',
+  name: 'Contact Us 3',
+  entities: [section],
+  discriminator: 'page',
+  edges: [],
+};
+
+export const testForm: RForm = {
   id: '12345',
   name: 'My Form',
-  pages: [page],
+  pages: [page1, page2, page3],
   discriminator: 'form',
 };

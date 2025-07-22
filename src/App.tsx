@@ -1,8 +1,8 @@
-import FormRenderer from './components/FormRenderer';
+import FormRenderer from './components/RFormRenderer';
 
 function App() {
   return (
-    <section className='flex justify-center mt-32'>
+    <section className='mt-32 flex justify-center'>
       <FormRenderer />
     </section>
   );

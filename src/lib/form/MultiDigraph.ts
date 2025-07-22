@@ -3,6 +3,8 @@
  *  directed multigraph
  */
 export class MultiDigraph {
+  #currentPageNodeId: string;
+
   // key = page node id; value = set of edge ids where origin page node is the key
   #graph: Map<string, Set<string>>;
 
@@ -10,6 +12,7 @@ export class MultiDigraph {
   #pageEdges: Map<string, PageEdge>;
 
   constructor() {
+    this.#currentPageNodeId = '';
     this.#graph = new Map<string, Set<string>>();
     this.#pageNodes = new Map<string, PageNode>();
     this.#pageEdges = new Map<string, PageEdge>();
@@ -50,6 +53,10 @@ export class MultiDigraph {
     this.#graph.delete(pageNode.id);
   }
 
+  getCurrentPageNodeId() {
+    return this.#currentPageNodeId;
+  }
+
   getNextPageNode(currentPageNode: PageNode): PageNode | null {
     const edgeSet = this.#graph.get(currentPageNode.id);
 
@@ -74,6 +81,14 @@ export class MultiDigraph {
     }
 
     return null;
+  }
+
+  setInitialPageNode(pageId: string) {
+    if (!this.#graph.has(pageId)) {
+      return;
+    }
+
+    this.#currentPageNodeId = pageId;
   }
 }
 
