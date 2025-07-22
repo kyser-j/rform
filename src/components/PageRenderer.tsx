@@ -1,5 +1,6 @@
 import { useRFormProvider } from '@/lib/hooks/useRFormProvider';
 import type { Page } from '@/lib/types/FormComponents';
+import { observer } from 'mobx-react-lite';
 import ComponentRenderer from './ComponentRenderer';
 import SectionRenderer from './SectionRenderer';
 
@@ -7,10 +8,10 @@ interface Props {
   page: Page;
 }
 
-const PageRenderer = ({ page }: Props) => {
+const PageRenderer = observer(({ page }: Props) => {
   const { pageGraph } = useRFormProvider();
 
-  const isCurrentPage = pageGraph.getCurrentPageNodeId() === page.id;
+  const isCurrentPage = pageGraph.currentPageNodeId === page.id;
 
   return (
     <div className={`${isCurrentPage ? '' : 'hidden'}`}>
@@ -26,6 +27,6 @@ const PageRenderer = ({ page }: Props) => {
       })}
     </div>
   );
-};
+});
 
 export default PageRenderer;

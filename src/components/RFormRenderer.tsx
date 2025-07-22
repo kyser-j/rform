@@ -1,10 +1,10 @@
-import { MultiDigraphFactory } from '@/lib/form/MultiDiGraphFactory';
+import { MultiDiGraphFactory } from '@/lib/form/MultiDiGraphFactory';
 import { testForm } from '@/lib/testFiles/testForm';
 import PageRenderer from './PageRenderer';
 import RFormProvider from './RFormProvider';
 
 const RFormRenderer = () => {
-  const pageGraph = new MultiDigraphFactory(testForm).create();
+  const pageGraph = new MultiDiGraphFactory(testForm).create();
 
   return (
     <RFormProvider rformState={{ pageGraph }}>

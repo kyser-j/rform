@@ -1,47 +1,45 @@
+import { makeAutoObservable } from 'mobx';
+
 /*
  *  Class representing the connections between pages in the form using a
  *  directed multigraph
  */
-export class MultiDigraph {
-  #currentPageNodeId: string;
-
+export class MultiDiGraph {
   // key = page node id; value = set of edge ids where origin page node is the key
-  #graph: Map<string, Set<string>>;
+  graph = new Map<string, Set<string>>();
 
-  #pageNodes: Map<string, PageNode>;
-  #pageEdges: Map<string, PageEdge>;
+  currentPageNodeId: string = '';
+  pageNodes = new Map<string, PageNode>();
+  pageEdges = new Map<string, PageEdge>();
 
   constructor() {
-    this.#currentPageNodeId = '';
-    this.#graph = new Map<string, Set<string>>();
-    this.#pageNodes = new Map<string, PageNode>();
-    this.#pageEdges = new Map<string, PageEdge>();
+    makeAutoObservable(this);
   }
 
   addPageEdge(pageEdge: PageEdge) {
-    const edgeSet = this.#graph.get(pageEdge.originPageId);
+    const edgeSet = this.graph.get(pageEdge.originPageId);
 
-    if (!edgeSet || !this.#graph.has(pageEdge.destinationPageId)) {
+    if (!edgeSet || !this.graph.has(pageEdge.destinationPageId)) {
       return;
     }
 
     edgeSet.add(pageEdge.id);
-    this.#pageEdges.set(pageEdge.id, pageEdge);
+    this.pageEdges.set(pageEdge.id, pageEdge);
   }
 
   addPageNode(pageNode: PageNode) {
-    if (!this.#graph.has(pageNode.id)) {
-      this.#graph.set(pageNode.id, new Set<string>());
+    if (!this.graph.has(pageNode.id)) {
+      this.graph.set(pageNode.id, new Set<string>());
     }
 
-    if (!this.#pageNodes.has(pageNode.id)) {
-      this.#pageNodes.set(pageNode.id, pageNode);
+    if (!this.pageNodes.has(pageNode.id)) {
+      this.pageNodes.set(pageNode.id, pageNode);
     }
   }
 
   deletePageEdge(pageEdge: PageEdge) {
-    this.#pageEdges.delete(pageEdge.id);
-    const edgeSet = this.#graph.get(pageEdge.originPageId);
+    this.pageEdges.delete(pageEdge.id);
+    const edgeSet = this.graph.get(pageEdge.originPageId);
 
     if (edgeSet) {
       edgeSet.delete(pageEdge.id);
@@ -49,46 +47,40 @@ export class MultiDigraph {
   }
 
   deletePageNode(pageNode: PageNode) {
-    this.#pageNodes.delete(pageNode.id);
-    this.#graph.delete(pageNode.id);
+    this.pageNodes.delete(pageNode.id);
+    this.graph.delete(pageNode.id);
   }
 
-  getCurrentPageNodeId() {
-    return this.#currentPageNodeId;
+  setInitialPageNode(pageId: string) {
+    if (!this.graph.has(pageId)) {
+      return;
+    }
+
+    this.currentPageNodeId = pageId;
   }
 
-  getNextPageNode(currentPageNode: PageNode): PageNode | null {
-    const edgeSet = this.#graph.get(currentPageNode.id);
+  transitionToNextPage() {
+    const edgeSet = this.graph.get(this.currentPageNodeId);
 
     if (!edgeSet) {
       return null;
     }
 
     for (const edgeId of edgeSet) {
-      const edge = this.#pageEdges.get(edgeId);
+      const edge = this.pageEdges.get(edgeId);
 
       if (!edge) {
         continue;
       }
 
       if (edge.evaluateCondition()) {
-        const pageNode = this.#pageNodes.get(edge.destinationPageId);
+        const pageNode = this.pageNodes.get(edge.destinationPageId);
 
         if (pageNode) {
-          return pageNode;
+          this.currentPageNodeId = pageNode.id;
         }
       }
     }
-
-    return null;
-  }
-
-  setInitialPageNode(pageId: string) {
-    if (!this.#graph.has(pageId)) {
-      return;
-    }
-
-    this.#currentPageNodeId = pageId;
   }
 }
 
@@ -99,6 +91,7 @@ export class PageNode {
   constructor(id: string, name: string) {
     this.id = id;
     this.name = name;
+    makeAutoObservable(this);
   }
 }
 
@@ -113,6 +106,7 @@ export class PageEdge {
     this.name = name;
     this.originPageId = originPageId;
     this.destinationPageId = destinationPageId;
+    makeAutoObservable(this);
   }
 
   evaluateCondition() {

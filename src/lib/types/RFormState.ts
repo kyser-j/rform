@@ -1,5 +1,5 @@
-import type { MultiDigraph } from '../form/MultiDigraph';
+import type { MultiDiGraph } from '../form/MultiDiGraph';
 
 export interface RFormState {
-  pageGraph: MultiDigraph;
+  pageGraph: MultiDiGraph;
 }

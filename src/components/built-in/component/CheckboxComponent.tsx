@@ -1,10 +1,11 @@
 import type { Checkbox } from '@/lib/types/BuiltInComponents';
+import { observer } from 'mobx-react-lite';
 
 interface Props {
   component: Checkbox;
 }
 
-const CheckboxComponent = ({ component }: Props) => {
+const CheckboxComponent = observer(({ component }: Props) => {
   return (
     <div className='mt-4 flex'>
       <label htmlFor={component.id} className='flex items-center justify-center hover:cursor-pointer'>
@@ -13,6 +14,6 @@ const CheckboxComponent = ({ component }: Props) => {
       </label>
     </div>
   );
-};
+});
 
 export default CheckboxComponent;

@@ -1,11 +1,12 @@
 import type { Section } from '@/lib/types/FormComponents';
+import { observer } from 'mobx-react-lite';
 import ComponentRenderer from './ComponentRenderer';
 
 interface Props {
   section: Section;
 }
 
-const SectionRenderer = ({ section }: Props) => {
+const SectionRenderer = observer(({ section }: Props) => {
   return (
     <div className='py-4'>
       {section.entities?.map((entity) => {
@@ -19,6 +20,6 @@ const SectionRenderer = ({ section }: Props) => {
       })}
     </div>
   );
-};
+});
 
 export default SectionRenderer;

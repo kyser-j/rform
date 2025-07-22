@@ -1,7 +1,7 @@
 import type { RForm } from '../types/FormComponents';
-import { MultiDigraph, PageEdge, PageNode } from './MultiDigraph';
+import { MultiDiGraph, PageEdge, PageNode } from './MultiDiGraph';
 
-export class MultiDigraphFactory {
+export class MultiDiGraphFactory {
   #edges: PageEdge[];
   #pages: PageNode[];
 
@@ -18,8 +18,8 @@ export class MultiDigraphFactory {
     });
   }
 
-  create(): MultiDigraph {
-    const pageGraph = new MultiDigraph();
+  create(): MultiDiGraph {
+    const pageGraph = new MultiDiGraph();
 
     for (const page of this.#pages) {
       pageGraph.addPageNode(page);

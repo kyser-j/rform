@@ -1,10 +1,11 @@
 import type { Dropdown } from '@/lib/types/BuiltInComponents';
+import { observer } from 'mobx-react-lite';
 
 interface Props {
   component: Dropdown;
 }
 
-const DropdownComponent = ({ component }: Props) => {
+const DropdownComponent = observer(({ component }: Props) => {
   return (
     <div className='mt-4 flex flex-col'>
       <label htmlFor={component.id} className='mb-1 text-xs font-semibold'>
@@ -19,6 +20,6 @@ const DropdownComponent = ({ component }: Props) => {
       </select>
     </div>
   );
-};
+});
 
 export default DropdownComponent;

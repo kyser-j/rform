@@ -1,10 +1,11 @@
 import type { RadioButton } from '@/lib/types/BuiltInComponents';
+import { observer } from 'mobx-react-lite';
 
 interface Props {
   component: RadioButton;
 }
 
-const RadioButtonComponent = ({ component }: Props) => {
+const RadioButtonComponent = observer(({ component }: Props) => {
   return (
     <div className='mt-4 flex gap-4' id={component.id}>
       {Object.keys(component.options).map((optionKey) => (
@@ -15,6 +16,6 @@ const RadioButtonComponent = ({ component }: Props) => {
       ))}
     </div>
   );
-};
+});
 
 export default RadioButtonComponent;
