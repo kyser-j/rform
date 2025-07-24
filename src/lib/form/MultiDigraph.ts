@@ -9,6 +9,7 @@ export class MultiDiGraph {
   graph = new Map<string, Set<string>>();
 
   currentPageNodeId: string = '';
+  pageHistory: string[] = [];
   pageNodes = new Map<string, PageNode>();
   pageEdges = new Map<string, PageEdge>();
 
@@ -37,20 +38,6 @@ export class MultiDiGraph {
     }
   }
 
-  deletePageEdge(pageEdge: PageEdge) {
-    this.pageEdges.delete(pageEdge.id);
-    const edgeSet = this.graph.get(pageEdge.originPageId);
-
-    if (edgeSet) {
-      edgeSet.delete(pageEdge.id);
-    }
-  }
-
-  deletePageNode(pageNode: PageNode) {
-    this.pageNodes.delete(pageNode.id);
-    this.graph.delete(pageNode.id);
-  }
-
   setInitialPageNode(pageId: string) {
     if (!this.graph.has(pageId)) {
       return;
@@ -77,9 +64,23 @@ export class MultiDiGraph {
         const pageNode = this.pageNodes.get(edge.destinationPageId);
 
         if (pageNode) {
+          this.pageHistory.push(this.currentPageNodeId);
           this.currentPageNodeId = pageNode.id;
         }
       }
+    }
+  }
+
+  transitionToPreviousPage() {
+    if (this.pageHistory.length === 0) {
+      return;
+    }
+
+    const previousPageNodeId = this.pageHistory[this.pageHistory.length - 1];
+
+    if (this.graph.has(previousPageNodeId)) {
+      this.pageHistory.pop();
+      this.currentPageNodeId = previousPageNodeId;
     }
   }
 }

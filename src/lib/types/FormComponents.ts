@@ -39,6 +39,6 @@ export interface FormComponent extends FormEntity {
   formComponentType: FormComponentType;
 }
 
-export type FormComponentType = 'button' | 'nextbutton' | 'checkbox' | 'dropdown' | 'input' | 'radio' | 'text' | 'textarea';
+export type FormComponentType = 'button' | 'nextbutton' | 'previousbutton' | 'checkbox' | 'dropdown' | 'input' | 'radio' | 'text' | 'textarea';
 
 export type Entities = Array<Section | FormComponent>;

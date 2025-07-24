@@ -1,4 +1,4 @@
-import type { Button, Checkbox, Dropdown, Input, NextButton, RadioButton, Text, TextArea } from '../types/BuiltInComponents';
+import type { Button, Checkbox, Dropdown, Input, NextButton, PreviousButton, RadioButton, Text, TextArea } from '../types/BuiltInComponents';
 import type { Page, RForm, Section } from '../types/FormComponents';
 
 const nameInput: Input = {
@@ -75,6 +75,15 @@ const nextButton: NextButton = {
   buttonText: 'Next Page',
 };
 
+const previousbutton: PreviousButton = {
+  discriminator: 'component',
+  id: 'previous-button',
+  formComponentType: 'previousbutton',
+  name: 'previous-button',
+  type: 'button',
+  buttonText: 'Previous Page',
+};
+
 const submitButton: Button = {
   discriminator: 'component',
   id: 'submit',
@@ -94,14 +103,14 @@ const section1: Section = {
 const section2: Section = {
   id: 'section-2',
   layout: '1-column',
-  entities: [favoriteColorDropdown, maleOrFemaleRadioButtons, nextButton],
+  entities: [favoriteColorDropdown, maleOrFemaleRadioButtons, nextButton, previousbutton],
   discriminator: 'section',
 };
 
 const section3: Section = {
   id: 'section-3',
   layout: '1-column',
-  entities: [descriptionTextArea, text, submitButton],
+  entities: [descriptionTextArea, text, previousbutton, submitButton],
   discriminator: 'section',
 };
 

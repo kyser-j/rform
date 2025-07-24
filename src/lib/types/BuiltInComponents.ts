@@ -8,6 +8,11 @@ export interface Button extends FormComponent {
   type: 'button' | 'submit';
 }
 
+export interface PreviousButton extends Omit<Button, 'formComponentType'>, FormComponent {
+  formComponentType: 'previousbutton';
+  type: 'button';
+}
+
 export interface NextButton extends Omit<Button, 'formComponentType'>, FormComponent {
   formComponentType: 'nextbutton';
   type: 'button';
