@@ -11,16 +11,16 @@ interface Props {
 const PageRenderer = observer(({ page }: Props) => {
   const { pageGraph } = useRFormProvider();
 
-  const isCurrentPage = pageGraph.currentPageNodeId === page.id;
+  const isCurrentPage = pageGraph.currentPageNodeId === page.rFormId;
 
   return (
     <div className={`${isCurrentPage ? '' : 'hidden'}`}>
       <h1 className='text-2xl font-semibold'>{page.name}</h1>
       {page.entities?.map((entity) => {
         if (entity.discriminator === 'section') {
-          return <SectionRenderer key={entity.id} section={entity} />;
+          return <SectionRenderer key={entity.rFormId} section={entity} />;
         } else if (entity.discriminator === 'component') {
-          return <ComponentRenderer key={entity.id} component={entity} />;
+          return <ComponentRenderer key={entity.rFormId} component={entity} />;
         } else {
           return null;
         }

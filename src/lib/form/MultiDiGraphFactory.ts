@@ -10,10 +10,10 @@ export class MultiDiGraphFactory {
     this.#pages = [];
 
     rform.pages.forEach((page) => {
-      this.#pages.push(new PageNode(page.id, page.name));
+      this.#pages.push(new PageNode(page.rFormId, page.name));
 
       page.edges.forEach((edge) => {
-        this.#edges.push(new PageEdge(edge.id, edge.name, page.id, edge.destinationPageId));
+        this.#edges.push(new PageEdge(edge.rFormId, edge.name, page.rFormId, edge.destinationPageRFormId));
       });
     });
   }

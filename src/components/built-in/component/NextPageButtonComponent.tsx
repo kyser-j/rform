@@ -8,14 +8,17 @@ interface Props {
 }
 
 const NextPageButtonComponent = observer(({ component }: Props) => {
-  const { pageGraph } = useRFormProvider();
+  const { pageGraph, rules } = useRFormProvider(component);
+
+  const hasNavigateOnClickRule = rules?.some((rule) => rule.trigger.type === 'click' && rule.effect.type === 'navigate');
 
   const handleNextPageButtonClick: React.MouseEventHandler<HTMLButtonElement> = (e) => {
+    console.log({ hasNavigateOnClickRule });
     e.preventDefault();
     pageGraph.transitionToNextPage();
   };
 
-  return <ButtonComponent component={{ ...component, formComponentType: 'button' }} onClick={handleNextPageButtonClick} />;
+  return <ButtonComponent component={{ ...component, formComponentType: 'button' }} onClick={hasNavigateOnClickRule ? handleNextPageButtonClick : undefined} />;
 });
 
 export default NextPageButtonComponent;

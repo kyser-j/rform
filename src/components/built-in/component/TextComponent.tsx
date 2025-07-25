@@ -8,7 +8,7 @@ interface Props {
 const TextComponent = observer(({ component }: Props) => {
   return (
     <div className='mt-4'>
-      <p id={component.id} className=''>
+      <p id={component.htmlId} className=''>
         {component.text}
       </p>
     </div>

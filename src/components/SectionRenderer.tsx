@@ -11,9 +11,9 @@ const SectionRenderer = observer(({ section }: Props) => {
     <div className='py-4'>
       {section.entities?.map((entity) => {
         if (entity.discriminator === 'section') {
-          return <SectionRenderer key={entity.id} section={entity} />;
+          return <SectionRenderer key={entity.rFormId} section={entity} />;
         } else if (entity.discriminator === 'component') {
-          return <ComponentRenderer key={entity.id} component={entity} />;
+          return <ComponentRenderer key={entity.rFormId} component={entity} />;
         } else {
           return null;
         }

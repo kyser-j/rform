@@ -1,7 +1,10 @@
+import type { InteractionRule } from './InteractionRules';
+
 type Discriminator = 'form' | 'page' | 'pageedge' | 'section' | 'component';
 
 export interface FormEntity {
-  id: string;
+  rFormId: string;
+  htmlId: string;
   name: string;
   discriminator: Discriminator;
 }
@@ -13,11 +16,12 @@ export interface FormEntityWithSubEntities extends FormEntity {
 export interface RForm extends FormEntity {
   discriminator: 'form';
   pages: Page[];
+  rules?: InteractionRule[];
 }
 
-export interface PageEdge extends FormEntity {
+export interface PageEdge extends Omit<FormEntity, 'htmlId'> {
   discriminator: 'pageedge';
-  destinationPageId: string;
+  destinationPageRFormId: string;
 }
 
 export interface Page extends FormEntityWithSubEntities {
@@ -30,10 +34,8 @@ export interface Section extends Omit<FormEntityWithSubEntities, 'name'> {
   layout: '1-column' | '2-column' | '3-column';
 }
 
-// This will be the base for the input components like
+// This will be the base for the input/text components like
 // export interface Input extends HTMLInputElement, FormComponent
-//
-// Unsure if I'll use this for things like labels, paragraphs, links, etc.
 export interface FormComponent extends FormEntity {
   discriminator: 'component';
   formComponentType: FormComponentType;
