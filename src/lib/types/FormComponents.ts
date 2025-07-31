@@ -1,4 +1,4 @@
-import type { InteractionRule } from './InteractionRules';
+import type { EdgeNavigationRule, InteractionRule } from './Rules';
 
 type Discriminator = 'form' | 'page' | 'pageedge' | 'section' | 'component';
 
@@ -22,6 +22,7 @@ export interface RForm extends FormEntity {
 export interface PageEdge extends Omit<FormEntity, 'htmlId'> {
   discriminator: 'pageedge';
   destinationPageRFormId: string;
+  edgeNavigationRule?: EdgeNavigationRule;
 }
 
 export interface Page extends FormEntityWithSubEntities {
@@ -39,6 +40,7 @@ export interface Section extends Omit<FormEntityWithSubEntities, 'name'> {
 export interface FormComponent extends FormEntity {
   discriminator: 'component';
   formComponentType: FormComponentType;
+  hasTrackableInputValue: boolean;
 }
 
 export type FormComponentType = 'button' | 'nextbutton' | 'previousbutton' | 'checkbox' | 'dropdown' | 'input' | 'radio' | 'text' | 'textarea';

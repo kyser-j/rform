@@ -1,4 +1,4 @@
-import { useRFormProvider } from '@/lib/hooks/useRFormProvider';
+import { useRFormContext } from '@/lib/hooks/useRFormContext';
 import type { Page } from '@/lib/types/FormComponents';
 import { observer } from 'mobx-react-lite';
 import ComponentRenderer from './ComponentRenderer';
@@ -9,7 +9,9 @@ interface Props {
 }
 
 const PageRenderer = observer(({ page }: Props) => {
-  const { pageGraph } = useRFormProvider();
+  const { pageGraph } = useRFormContext();
+
+  console.log({ currentPage: pageGraph.currentPageNodeId });
 
   const isCurrentPage = pageGraph.currentPageNodeId === page.rFormId;
 

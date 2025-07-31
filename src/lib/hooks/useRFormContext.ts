@@ -3,12 +3,12 @@ import { RFormContext } from '../context/rformContext';
 import type { FormComponent } from '../types/FormComponents';
 import type { RFormState } from '../types/RFormState';
 
-export const useRFormProvider = (component?: FormComponent): RFormState => {
+export const useRFormContext = (component?: FormComponent): RFormState => {
   const context = useContext(RFormContext);
 
   // If no component passed in we can't filter on the rules to find which ones are applicable to this component
   // so we'll return no interaction rules in that case
-  if (!component) return { pageGraph: context.pageGraph };
+  if (!component) return { pageGraph: context.pageGraph, values: context.values };
 
   const applicableInteractionRules = context.rules?.filter(
     (rule) =>
@@ -16,5 +16,5 @@ export const useRFormProvider = (component?: FormComponent): RFormState => {
       (rule.trigger.targetComponentType && rule.trigger.targetComponentType === component.formComponentType),
   );
 
-  return { pageGraph: context.pageGraph, rules: applicableInteractionRules };
+  return { pageGraph: context.pageGraph, rules: applicableInteractionRules, values: context.values };
 };

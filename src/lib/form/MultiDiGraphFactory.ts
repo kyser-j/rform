@@ -13,7 +13,7 @@ export class MultiDiGraphFactory {
       this.#pages.push(new PageNode(page.rFormId, page.name));
 
       page.edges.forEach((edge) => {
-        this.#edges.push(new PageEdge(edge.rFormId, edge.name, page.rFormId, edge.destinationPageRFormId));
+        this.#edges.push(new PageEdge(edge.rFormId, edge.name, page.rFormId, edge.destinationPageRFormId, edge.edgeNavigationRule));
       });
     });
   }

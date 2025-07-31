@@ -1,4 +1,4 @@
-import type { InteractionRule } from '../types/InteractionRules';
+import type { InteractionRule } from '../types/Rules';
 
 export const nextPageClickInteractionRule: InteractionRule = {
   trigger: {

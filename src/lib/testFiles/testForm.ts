@@ -1,5 +1,5 @@
 import type { Button, Checkbox, Dropdown, Input, NextButton, PreviousButton, RadioButton, Text, TextArea } from '../types/BuiltInComponents';
-import type { Page, RForm, Section } from '../types/FormComponents';
+import type { Page, PageEdge, RForm, Section } from '../types/FormComponents';
 import { nextPageClickInteractionRule, previousPageClickInteractionRule } from './testInteractionRules';
 
 const nameInput: Input = {
@@ -8,6 +8,7 @@ const nameInput: Input = {
   name: 'Name',
   discriminator: 'component',
   formComponentType: 'input',
+  hasTrackableInputValue: true,
 };
 
 const emailInput: Input = {
@@ -16,6 +17,7 @@ const emailInput: Input = {
   name: 'Email',
   discriminator: 'component',
   formComponentType: 'input',
+  hasTrackableInputValue: true,
 };
 
 const areYouCoolCheckbox: Checkbox = {
@@ -25,6 +27,7 @@ const areYouCoolCheckbox: Checkbox = {
   discriminator: 'component',
   formComponentType: 'checkbox',
   label: 'Are you cool?',
+  hasTrackableInputValue: true,
 };
 
 const favoriteColorDropdown: Dropdown = {
@@ -42,6 +45,7 @@ const favoriteColorDropdown: Dropdown = {
     indigo: 'indigo',
     violet: 'violet',
   },
+  hasTrackableInputValue: true,
 };
 
 const maleOrFemaleRadioButtons: RadioButton = {
@@ -54,6 +58,7 @@ const maleOrFemaleRadioButtons: RadioButton = {
     male: 'Male',
     female: 'Female',
   },
+  hasTrackableInputValue: true,
 };
 
 const descriptionTextArea: TextArea = {
@@ -62,6 +67,7 @@ const descriptionTextArea: TextArea = {
   name: 'How can we help?',
   discriminator: 'component',
   formComponentType: 'textarea',
+  hasTrackableInputValue: true,
 };
 
 const text: Text = {
@@ -72,6 +78,7 @@ const text: Text = {
   formComponentType: 'text',
   text: 'Thank you for filling out this form!',
   entities: [],
+  hasTrackableInputValue: false,
 };
 
 const nextButton: NextButton = {
@@ -82,6 +89,7 @@ const nextButton: NextButton = {
   name: 'next-button',
   type: 'button',
   buttonText: 'Next Page',
+  hasTrackableInputValue: false,
 };
 
 const previousbutton: PreviousButton = {
@@ -92,6 +100,7 @@ const previousbutton: PreviousButton = {
   name: 'previous-button',
   type: 'button',
   buttonText: 'Previous Page',
+  hasTrackableInputValue: false,
 };
 
 const submitButton: Button = {
@@ -102,6 +111,7 @@ const submitButton: Button = {
   formComponentType: 'button',
   type: 'submit',
   buttonText: 'Submit',
+  hasTrackableInputValue: false,
 };
 
 const section1: Section = {
@@ -128,20 +138,48 @@ const section3: Section = {
   discriminator: 'section',
 };
 
+const edgePage1ToPage2: PageEdge = {
+  rFormId: '29b507e4-f9a4-40f8-8289-e3b3d4e8ce5a',
+  discriminator: 'pageedge',
+  destinationPageRFormId: '33629f60-6535-4f10-83c6-3c96faa0593f', // page 2
+  name: 'edge-page1-to-page2',
+  edgeNavigationRule: {
+    rFormId: '3cf37362-c9e8-4ccd-a516-698d4833f4dc',
+    targetValueRFormId: '45f2f983-e0b3-4783-9340-967bd6d92418',
+    configuredValue: 'Josh',
+    type: 'condition',
+    operator: 'equals',
+  },
+};
+
+const edgePage1ToPage3: PageEdge = {
+  rFormId: 'c3d628cb-c413-4361-9c84-e541ca454c62',
+  discriminator: 'pageedge',
+  destinationPageRFormId: 'f8cc1b3c-b4f6-4c4b-be14-9c2c870ead66', // page 3
+  name: 'edge-page1-to-page3',
+  edgeNavigationRule: {
+    rFormId: '4a126c2e-bca7-4112-b37f-725915b0d7aa',
+    targetValueRFormId: '45f2f983-e0b3-4783-9340-967bd6d92418',
+    configuredValue: 'Joel',
+    type: 'condition',
+    operator: 'equals',
+  },
+};
+
 const page1: Page = {
   rFormId: '54742fe6-d15b-410b-859e-e2718913886f',
   htmlId: 'page1',
   name: 'Contact Us 1',
   entities: [section1],
   discriminator: 'page',
-  edges: [
-    {
-      rFormId: '29b507e4-f9a4-40f8-8289-e3b3d4e8ce5a',
-      discriminator: 'pageedge',
-      destinationPageRFormId: '33629f60-6535-4f10-83c6-3c96faa0593f', // page 2
-      name: 'page-edge-1',
-    },
-  ],
+  edges: [edgePage1ToPage2, edgePage1ToPage3],
+};
+
+const edgePage2ToPage3: PageEdge = {
+  rFormId: '4db4dbb8-cd31-4239-8f74-f816e6837bda',
+  discriminator: 'pageedge',
+  destinationPageRFormId: 'f8cc1b3c-b4f6-4c4b-be14-9c2c870ead66', // page 3
+  name: 'page-edge-2',
 };
 
 const page2: Page = {
@@ -150,14 +188,7 @@ const page2: Page = {
   name: 'Contact Us 2',
   entities: [section2],
   discriminator: 'page',
-  edges: [
-    {
-      rFormId: '4db4dbb8-cd31-4239-8f74-f816e6837bda',
-      discriminator: 'pageedge',
-      destinationPageRFormId: 'f8cc1b3c-b4f6-4c4b-be14-9c2c870ead66', // page 3
-      name: 'page-edge-2',
-    },
-  ],
+  edges: [edgePage2ToPage3],
 };
 
 const page3: Page = {
